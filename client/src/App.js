@@ -4,6 +4,7 @@ import { Route, Switch } from 'react-router-dom'
 import Header from './components/Header'
 import { Container } from 'reactstrap';
 import AddCategory from "./components/AddCategory";
+import Categories from "./components/Categories";
 
 class App extends Component {
   render() {
@@ -11,6 +12,7 @@ class App extends Component {
       <Container>
         <Header/>
         <Switch>
+          <Route exact path="/" component={Categories} />
           <Route path="/categories/add" component={AddCategory} />
         </Switch>
       </Container>

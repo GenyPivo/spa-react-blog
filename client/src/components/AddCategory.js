@@ -4,7 +4,7 @@ export default class AddCategory extends Component {
   render() {
     return(
       <div>
-
+        Hi
       </div>
     )
   };

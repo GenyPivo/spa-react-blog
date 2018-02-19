@@ -1,13 +1,24 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import { Button } from 'reactstrap'
+import React from 'react';
+import {Link} from 'react-router-dom';
+import RaisedButton from 'material-ui/Button';
 
-export default class Header extends Component {
-  render() {
-    return(
-      <Link to='/categories/add' className="offset-sm-5">
-        <Button color="success">Create new category</Button>
-      </Link>
-    );
-  }
-}
+const style = {
+  margin: 12,
+};
+
+const Header = () => (
+  <div>
+    <Link to='/'>
+      <RaisedButton label="Primary" secondary style={style} >
+        Categories list
+      </RaisedButton>
+    </Link>
+    <Link to='/categories/add'>
+      <RaisedButton label="Secondary" secondary style={style} >
+        Create new category
+      </RaisedButton>
+    </Link>
+  </div>
+);
+
+export default Header
