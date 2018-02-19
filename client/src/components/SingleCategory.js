@@ -1,6 +1,5 @@
 import React from 'react';
 import { List } from 'semantic-ui-react';
-import PropTypes from 'prop-types';
 
 export default function SingleCategory(props) {
   return (

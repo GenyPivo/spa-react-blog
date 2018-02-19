@@ -9,6 +9,7 @@ class Api::V1::CategoriesController < ApplicationController
     category = Category.new(permitted_params)
     if category.save
       render json: category
+      ActionCable.server.broadcast 'notify_channel', category: category
     else
       render json: { error: 'Some error' }, status: 400
     end

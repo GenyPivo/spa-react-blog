@@ -10,6 +10,7 @@ import rootReducer from "./rootReducer";
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension'
 import 'semantic-ui-css/semantic.min.css';
+import { ActionCableProvider } from 'react-actioncable-provider'
 
 
 const store = createStore(
@@ -20,7 +21,9 @@ const store = createStore(
 ReactDOM.render((
   <BrowserRouter>
     <Provider store={store}>
-      <App/>
+      <ActionCableProvider url='ws://localhost:3001/cable'>
+        <App/>
+      </ActionCableProvider>
     </Provider>
   </BrowserRouter>), document.getElementById('root'));
 registerServiceWorker();
