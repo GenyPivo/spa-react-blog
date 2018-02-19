@@ -1,22 +1,18 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
-import RaisedButton from 'material-ui/Button';
+import { Link } from 'react-router-dom';
 
 const style = {
   margin: 12,
 };
 
 const Header = () => (
-  <div>
-    <Link to='/'>
-      <RaisedButton label="Primary" secondary style={style} >
+  <div className="ui two item menu">
+    <Link to='/' className="item">
+
         Categories list
-      </RaisedButton>
     </Link>
-    <Link to='/categories/add'>
-      <RaisedButton label="Secondary" secondary style={style} >
+    <Link to='/categories/add' className="item">
         Create new category
-      </RaisedButton>
     </Link>
   </div>
 );

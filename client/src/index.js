@@ -8,10 +8,13 @@ import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import rootReducer from "./rootReducer";
 import thunk from 'redux-thunk';
+import { composeWithDevTools } from 'redux-devtools-extension'
+import 'semantic-ui-css/semantic.min.css';
+
 
 const store = createStore(
   rootReducer,
-  applyMiddleware(thunk)
+  composeWithDevTools(applyMiddleware(thunk))
 );
 
 ReactDOM.render((
