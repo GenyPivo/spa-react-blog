@@ -5,6 +5,7 @@ import {connect} from "react-redux";
 import { Button, Form, Header } from 'semantic-ui-react'
 import { Redirect } from 'react-router-dom';
 
+
 class AddComment extends Component {
   state = {
     author: '',
@@ -30,7 +31,7 @@ class AddComment extends Component {
     e.preventDefault();
 
     let errors = {};
-    if (this.state.author === '') errors.author = "author can't be blank";
+    if (this.state.author === '') errors.author = "Author can't be blank";
     if (this.state.content === '') errors.content = "Content can't be blank";
     this.setState({ errors });
     const isValid = Object.keys(errors).length === 0;
@@ -67,6 +68,7 @@ class AddComment extends Component {
           <span>{this.state.errors.content}</span>
         </Form.Field>
         <Button type='submit' primary>Submit</Button>
+        <Button onClick={this.props.history.goBack}>Go Back</Button>
       </Form>
     );
 

@@ -1,6 +1,10 @@
 module Api
   module V1
     class CommentsController < ApplicationController
+      def index
+        render json: @commentable.comments
+      end
+
       def create
         comment = @commentable.comments.new comment_params
         if comment.save

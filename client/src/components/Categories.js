@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import CategoriesList from './CategoriesList'
 import PropTypes from 'prop-types';
-import { getCategories } from '../actions/categories'
+import { getCategories } from '../actions/categories';
+import SingleCategory from './SingleCategory';
+import { List } from 'semantic-ui-react';
 
 class Categories extends Component {
 
@@ -11,10 +12,23 @@ class Categories extends Component {
   }
 
   render() {
+    const categories = this.props.categories;
+
+    const categoriesCollection = (
+      <List>
+        {console.log(categories)}
+        {categories.map(category => <SingleCategory category={category} key={category.id}/>)}
+      </List>
+    );
+
+    const emptyCollectionMessage = (
+      <p>There are no categories yet</p>
+    );
+
     return (
       <div>
         <h1>Categories List</h1>
-        <CategoriesList categories={this.props.categories}/>
+        {categories.length === 0 ? emptyCollectionMessage : categoriesCollection }
       </div>
     );
   }

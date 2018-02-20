@@ -6,7 +6,9 @@ import Categories from "./components/Categories";
 import {ActionCable} from 'react-actioncable-provider'
 import { connect } from 'react-redux';
 import { addCategory } from './actions/categories';
-import AddComment from './components/AddComment'
+import AddComment from './components/AddComment';
+import Comments from './components/Comments';
+
 class App extends Component {
   onReceived = (message) => {
     this.props.addCategory(message.category);
@@ -20,7 +22,8 @@ class App extends Component {
         <Switch>
           <Route exact path="/" component={Categories} />
           <Route path="/categories/add" component={AddCategory} />
-          <Route exactly path="/categories/:id/comments/new" component={AddComment} />
+          <Route exact path="/categories/:id/comments/" component={Comments} />
+          <Route exact path="/categories/:id/comments/new" component={AddComment} />
         </Switch>
       </div>
     );

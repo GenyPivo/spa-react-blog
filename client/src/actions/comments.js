@@ -1,5 +1,5 @@
-export const SET_CATEGORIES = 'SET_CATEGORIES';
-export const ADD_CATEGORY = 'ADD_CATEGORY';
+export const SET_COMMENTS = 'SET_COMMENTS';
+export const ADD_COMMENT = 'ADD_COMMENT';
 
 function handleResponse(response) {
   if (response.ok) {
@@ -13,22 +13,21 @@ function handleResponse(response) {
 
 export function addComment(comment) {
   return {
-    type: ADD_CATEGORY,
+    type: ADD_COMMENT,
     comment
   }
 }
 
-export function setComments(categories) {
+export function setComments(comments) {
   return {
-    type: SET_CATEGORIES,
-    categories: categories,
-    fetched: true
+    type: SET_COMMENTS,
+    comments
   }
 }
 
-export function getComments(id) {
+export function getComments(id, resource) {
   return dispatch => {
-    fetch('api/v1/categories')
+    fetch(`/api/v1/${resource}/${id}/comments`)
       .then(res => res.json())
       .then(data => dispatch(setComments(data)));
   }
@@ -36,7 +35,6 @@ export function getComments(id) {
 
 export function saveComment(data) {
   return dispatch => {
-    console.log(data);
     return fetch(`/api/v1/${data.params.resource}/${data.params.id}/comments`, {
       method: 'post',
       body: JSON.stringify(data.data),
