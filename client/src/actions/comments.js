@@ -11,37 +11,39 @@ function handleResponse(response) {
   }
 }
 
-export function addCategory(category) {
+export function addComment(comment) {
   return {
     type: ADD_CATEGORY,
-    category
+    comment
   }
 }
 
-export function setCategories(categories) {
+export function setComments(categories) {
   return {
     type: SET_CATEGORIES,
-    categories: categories
+    categories: categories,
+    fetched: true
   }
 }
 
-export function getCategories() {
+export function getComments(id) {
   return dispatch => {
     fetch('api/v1/categories')
       .then(res => res.json())
-      .then(data => dispatch(setCategories(data)));
+      .then(data => dispatch(setComments(data)));
   }
 }
 
-export function saveCategory(data) {
+export function saveComment(data) {
   return dispatch => {
-    return fetch('/api/v1/categories', {
+    console.log(data);
+    return fetch(`/api/v1/${data.params.resource}/${data.params.id}/comments`, {
       method: 'post',
-      body: JSON.stringify(data),
+      body: JSON.stringify(data.data),
       headers: {
         "Content-Type": "application/json"
       }
     }).then(handleResponse)
-      .then(data => dispatch(addCategory(data)));
+      .then(data => dispatch(addComment(data.data)));
   }
 }

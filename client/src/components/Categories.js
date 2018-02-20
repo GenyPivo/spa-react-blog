@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { getCategories } from '../actions/categories'
 
 class Categories extends Component {
+
   componentDidMount() {
     this.props.getCategories();
   }
