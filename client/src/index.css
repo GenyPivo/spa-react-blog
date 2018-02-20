@@ -12,7 +12,24 @@ h1 {
   padding: 0 30px 0 30px;
 }
 
-.category-item {
+.category-item, .post-item, .custom-comment {
   padding: 20px 20px 10px 20px !important;
   border-bottom: 1px solid rgba(0,0,0,.1);
+}
+
+.post-link {
+  color: #000 !important;
+}
+
+.category-item:hover {
+  background: #e0e1e2 !important;
+}
+
+.comments-buttons-group {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.no-data {
+  text-align: center;
 }

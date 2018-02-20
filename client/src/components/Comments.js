@@ -27,17 +27,20 @@ class Comments extends Component {
     );
 
     const emptyCollectionMessage = (
-      <p>There are no comments yet</p>
+      <h3 className="no-data">There are no comments yet</h3>
     );
 
     return (
       <div>
         <h1>Comments</h1>
-        <Link to={`/${this.resourceParams().resource}/${this.resourceParams().id}/comments/new`} className="item">
-          <Button primary>
-            Add new comment
-          </Button>
-        </Link>
+        <div className="comments-buttons-group">
+          <Link to={`/${this.resourceParams().resource}/${this.resourceParams().id}/comments/new`}>
+            <Button primary>
+              Add new comment
+            </Button>
+          </Link>
+          <Button onClick={this.props.history.goBack} className="right floated">Go Back</Button>
+        </div>
         {comments.length === 0 ? emptyCollectionMessage : commentsCollection }
       </div>
     );

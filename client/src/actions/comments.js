@@ -33,15 +33,15 @@ export function getComments(id, resource) {
   }
 }
 
-export function saveComment(data) {
+export function saveComment(data, id, resource) {
   return dispatch => {
-    return fetch(`/api/v1/${data.params.resource}/${data.params.id}/comments`, {
+    return fetch(`/api/v1/${resource}/${id}/comments`, {
       method: 'post',
-      body: JSON.stringify(data.data),
+      body: JSON.stringify(data),
       headers: {
         "Content-Type": "application/json"
       }
     }).then(handleResponse)
-      .then(data => dispatch(addComment(data.data)));
+      .then(data => dispatch(addComment(data)));
   }
 }

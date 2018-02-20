@@ -8,6 +8,8 @@ import { connect } from 'react-redux';
 import { addCategory } from './actions/categories';
 import AddComment from './components/AddComment';
 import Comments from './components/Comments';
+import Posts from "./components/Posts";
+import AddPost from "./components/AddPost";
 
 class App extends Component {
   onReceived = (message) => {
@@ -24,6 +26,10 @@ class App extends Component {
           <Route path="/categories/add" component={AddCategory} />
           <Route exact path="/categories/:id/comments/" component={Comments} />
           <Route exact path="/categories/:id/comments/new" component={AddComment} />
+          <Route exact path="/categories/:id/posts/" component={Posts} />
+          <Route exact path="/categories/:id/posts/new" component={AddPost} />
+          <Route exact path="/posts/:id/comments" component={Comments} />
+          <Route exact path="/posts/:id/comments/new" component={AddComment} />
         </Switch>
       </div>
     );

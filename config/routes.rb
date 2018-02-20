@@ -4,6 +4,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :categories do
         resources :comments, module: :categories
+        resources :posts
       end
 
       resources :posts do

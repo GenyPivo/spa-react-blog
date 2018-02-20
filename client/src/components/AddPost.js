@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import classnames from "classnames";
-import { saveComment } from "../actions/comments";
-import {connect} from "react-redux";
-import { Button, Form, Header } from 'semantic-ui-react'
+import { savePost } from "../actions/posts";
+import { connect } from "react-redux";
+import { Button, Form, Header, TextArea } from 'semantic-ui-react'
 import { Redirect } from 'react-router-dom';
 
 
-class AddComment extends Component {
+class AddPost extends Component {
   state = {
-    author: '',
+    name: '',
     content: '',
     errors: {},
     server_error: '',
@@ -16,17 +16,10 @@ class AddComment extends Component {
     completed: false
   };
 
-  resource() {
-    return {
-      id: this.props.match.params.id,
-      type: this.props.match.path.split('/')[1]
-    }
-  }
-
   handleChange = (e) => {
-    if (!!this.state.errors[e.target.author]) {
+    if (!!this.state.errors[e.target.name]) {
       let errors = Object.assign({}, this.state.errors);
-      delete errors[e.target.author];
+      delete errors[e.target.name];
 
       this.setState({[e.target.name]: e.target.value, errors: errors});
     } else {
@@ -38,15 +31,16 @@ class AddComment extends Component {
     e.preventDefault();
 
     let errors = {};
-    if (this.state.author === '') errors.author = "Author can't be blank";
+    if (this.state.name === '') errors.name = "Name can't be blank";
     if (this.state.content === '') errors.content = "Content can't be blank";
     this.setState({ errors });
     const isValid = Object.keys(errors).length === 0;
 
     if (isValid) {
-      const { author, content } = this.state;
+      const { name, content } = this.state;
+      const resourceId = this.props.match.params.id;
       this.setState({ loading: true });
-      this.props.saveComment({ author: author, content: content}, this.resource().id, this.resource().type)
+      this.props.savePost({ name: name, content: content }, resourceId)
         .then(() => { this.setState( {complete: true} )},
           (err) => err.response.json().then(({error}) => this.setState({ server_error: error, loading: false })));
     }
@@ -55,15 +49,18 @@ class AddComment extends Component {
   render() {
     const form = (
       <Form onSubmit={this.handleSubmit} className={classnames({loading: this.state.loading})}>
-        <Header as="h1">Add new comment</Header>
-        <Form.Field className={classnames({error: !!this.state.errors.author})}>
-          <label>Your name</label>
-          <input name="author" value={this.state.author} onChange={this.handleChange}/>
-          <span>{this.state.errors.author}</span>
+        <Header as="h1">Add new post</Header>
+        <Form.Field className={classnames({error: !!this.state.errors.name})}>
+          <label>Post title</label>
+          <input name="name" value={this.state.name} onChange={this.handleChange}/>
+          <span>{this.state.errors.name}</span>
         </Form.Field>
         <Form.Field className={classnames({error: !!this.state.errors.content})}>
-          <label>Your comment</label>
-          <input name="content" value={this.state.content} onChange={this.handleChange}/>
+          <label>Content</label>
+          <TextArea placeholder='Write something interesting'
+                    name="content"
+                    value={this.state.content}
+                    onChange={this.handleChange} />
           <span>{this.state.errors.content}</span>
         </Form.Field>
         <Button type='submit' primary>Submit</Button>
@@ -74,11 +71,11 @@ class AddComment extends Component {
     return(
       <div>
         {!!this.state.server_error && <div className="ui negative message">{this.state.server_error}</div> }
-        { this.state.complete ? <Redirect to={`/${this.resource().type}/${this.resource().id}/comments`}/> : form }
+        { this.state.complete ? <Redirect to={`/categories/${this.props.match.params.id}`}/> : form }
       </div>
     )
   }
 }
 
-export default connect(null, { saveComment })(AddComment);
+export default connect(null, { savePost })(AddPost);
 
