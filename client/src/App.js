@@ -10,10 +10,24 @@ import AddComment from './components/AddComment';
 import Comments from './components/Comments';
 import Posts from "./components/Posts";
 import AddPost from "./components/AddPost";
+import { addComment } from './actions/comments'
 
 class App extends Component {
+
+  parseMessage = (message) => {
+    console.log(message);
+    console.log(this);
+    if (message.hasOwnProperty('category')) {
+      this.props.addCategory(message.category);
+    }
+
+    if (message.hasOwnProperty('comment')) {
+      this.props.addComment(message.comment);
+    }
+  };
+
   onReceived = (message) => {
-    this.props.addCategory(message.category);
+    this.parseMessage(message);
   };
 
   render() {
@@ -36,4 +50,11 @@ class App extends Component {
   }
 }
 
-export default withRouter(connect(null, { addCategory })(App));
+function mapStateToProps(state) {
+  return {
+    categories: state.categories,
+    comments: state.comments
+  }
+}
+
+export default withRouter(connect(mapStateToProps, { addCategory, addComment })(App));

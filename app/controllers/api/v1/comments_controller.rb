@@ -9,6 +9,7 @@ module Api
         comment = @commentable.comments.new comment_params
         if comment.save
           render json: comment
+          ActionCable.server.broadcast 'notify_channel', comment: comment
         else
           render json: 'Something wrong', status: 400
         end

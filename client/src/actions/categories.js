@@ -21,7 +21,10 @@ export function addCategory(category) {
 export function setCategories(categories) {
   return {
     type: SET_CATEGORIES,
-    categories: categories
+    categories: {
+      list: categories,
+      fetched: true
+    }
   }
 }
 
@@ -41,7 +44,6 @@ export function saveCategory(data) {
       headers: {
         "Content-Type": "application/json"
       }
-    }).then(handleResponse)
-      .then(data => dispatch(addCategory(data)));
+    }).then(handleResponse);
   }
 }

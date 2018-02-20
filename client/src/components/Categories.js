@@ -8,7 +8,7 @@ import { List } from 'semantic-ui-react';
 class Categories extends Component {
 
   componentDidMount() {
-    this.props.getCategories();
+    if (!this.props.categories.fetched) this.props.getCategories();
   }
 
   render() {
@@ -16,28 +16,27 @@ class Categories extends Component {
 
     const categoriesCollection = (
       <List>
-        {console.log(categories)}
-        {categories.map(category => <SingleCategory category={category} key={category.id}/>)}
+        {categories.hasOwnProperty('list') && categories.list.map(category => <SingleCategory category={category} key={category.id}/>)}
       </List>
     );
 
     const emptyCollectionMessage = (
-      <p>There are no categories yet</p>
+      <h3 className="no-data">There are no categories yet</h3>
     );
 
     return (
       <div>
         <h1>Categories List</h1>
-        {categories.length === 0 ? emptyCollectionMessage : categoriesCollection }
+        {(categories.hasOwnProperty('list') && categories.list.length === 0) ? emptyCollectionMessage : categoriesCollection }
       </div>
     );
   }
 }
 
-Categories.propTypes = {
-  categories: PropTypes.array.isRequired,
-  getCategories: PropTypes.func.isRequired
-};
+// Categories.propTypes = {
+//   categories: PropTypes.object.isRequired,
+//   getCategories: PropTypes.func.isRequired
+// };
 
 function mapStateToProps(state) {
   return {
