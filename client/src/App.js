@@ -3,9 +3,9 @@ import { Route, Switch, withRouter } from 'react-router-dom'
 import Header from './components/Header'
 import AddCategory from "./components/categories/AddCategory";
 import Categories from "./components/categories/Categories";
-import {ActionCable} from 'react-actioncable-provider'
+import {ActionCable} from 'react-actioncable-provider';
 import { connect } from 'react-redux';
-import { addCategory, updateCategory } from './actions/categories';
+import { addCategory, deleteCategory, updateCategory } from './actions/categories';
 import AddComment from './components/comments/AddComment';
 import Comments from './components/comments/Comments';
 import Posts from "./components/posts/Posts";
@@ -23,6 +23,10 @@ class App extends Component {
 
     if (message.hasOwnProperty('category') && message.action === 'update') {
       this.props.updateCategory(message.category);
+    }
+
+    if (message.hasOwnProperty('category') && message.action === 'destroy') {
+      this.props.deleteCategory(message.category.id);
     }
   };
 
@@ -60,4 +64,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default withRouter(connect(mapStateToProps, { addCategory, updateCategory })(App));
+export default withRouter(connect(mapStateToProps, { addCategory, updateCategory, deleteCategory })(App));

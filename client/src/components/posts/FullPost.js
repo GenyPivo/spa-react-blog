@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { List, Button, Image } from 'semantic-ui-react';
 import SingleComment from '../comments/SingleComment';
 import { Link } from 'react-router-dom';
+import { ActionCable } from 'react-actioncable-provider';
+import { addComment, setComments } from "../../actions/comments";
 
 class FullPost extends Component {
   state = {
@@ -14,16 +16,26 @@ class FullPost extends Component {
     if (posts.length === 0) {
       fetch(`/api/v1/posts/${this.props.match.params.id}`)
         .then(res => res.json())
-        .then(data => this.setState({post: data}));
+        .then(data => {
+          this.props.setComments(data.comments);
+          this.setState({post: data})
+        });
     } else {
-      this.setState({post: posts.find(x => x.id.toString() === this.props.match.params.id)});
+      const post = posts.find(x => x.id.toString() === this.props.match.params.id);
+      this.setState({post: post});
+      this.props.setComments(post.comments);
     }
   }
+
+  onReceived = (data) => {
+    this.props.addComment(data.comment);
+  };
 
   render() {
     const comments = (
       <div>
         <h3>Comments:</h3>
+        {console.log(this.props.comments)}
         <List>
           {this.props.comments.map(comment => <SingleComment
             comment={comment} key={comment.id}/>)}
@@ -45,7 +57,7 @@ class FullPost extends Component {
     const postAttachment = (
       <a href={`http://localhost:3001${attachUrl}`}>
         <Button color='red'>
-          Attachment: {attachUrl && attachUrl.replace(/^.*[\\\/]/, '').split('?')[0]}
+          Attachment: {attachUrl && attachUrl.replace(/^.*[\\/]/, '').split('?')[0]}
         </Button>
       </a>
     );
@@ -56,8 +68,15 @@ class FullPost extends Component {
       }
     };
 
+    const actionCable = (
+      <ActionCable ref='PostsChannel'
+                   channel={{channel: 'PostsChannel', post_id: this.props.match.params.id}}
+                   onReceived={this.onReceived} />
+    );
+
     return (
       <div>
+        {actionCable}
         <h1>{this.state.post.name}</h1>
         <div className="comments-buttons-group">
           <Link to={`/posts/${this.props.match.params.id}/comments/new`}>
@@ -84,4 +103,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, null)(FullPost);
+export default connect(mapStateToProps, { addComment, setComments })(FullPost);

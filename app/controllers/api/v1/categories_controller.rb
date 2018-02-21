@@ -9,9 +9,9 @@ class Api::V1::CategoriesController < ApplicationController
     category = Category.new(permitted_params)
     if category.save
       render json: category
-      ActionCable.server.broadcast 'notify_channel', category: category, action: 'create'
     else
-      render json: { error: 'Some error' }, status: 400
+      puts api_error(category)
+      render api_error(category)
     end
   end
 
@@ -22,9 +22,8 @@ class Api::V1::CategoriesController < ApplicationController
   def update
     if @category.update(permitted_params)
       render json: @category
-      ActionCable.server.broadcast 'notify_channel', category: @category, action: 'update'
     else
-      render json: { error: 'Some error' }, status: 400
+      render api_error(@category)
     end
   end
 
@@ -32,7 +31,7 @@ class Api::V1::CategoriesController < ApplicationController
     if @category.destroy
       render json: @category
     else
-      render json: { error: 'Some error' }, status: 400
+      render api_error(@category)
     end
   end
 

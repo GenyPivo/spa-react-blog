@@ -3,7 +3,7 @@ class Api::V1::PostsController < ApplicationController
   before_action :set_post, only: [:show, :update, :destroy]
 
   def index
-    render json: @category.posts
+    render json: @category.posts.includes(:comments)
   end
 
   def create
@@ -11,7 +11,7 @@ class Api::V1::PostsController < ApplicationController
     if post.save
       render json: post
     else
-      render json: { error: 'Some error' }, status: 400
+      render api_error(post)
     end
   end
 
@@ -23,7 +23,7 @@ class Api::V1::PostsController < ApplicationController
     if @post.update(permitted_params)
       render json: @post
     else
-      render json: { error: 'Some error' }, status: 400
+      render api_error(@post), status: 400
     end
   end
 
@@ -31,7 +31,7 @@ class Api::V1::PostsController < ApplicationController
     if @post.destroy
       render json: @post
     else
-      render json: { error: 'Some error' }, status: 400
+      render api_error(@post), status: 400
     end
   end
 

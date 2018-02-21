@@ -3,6 +3,12 @@ export const ADD_POST = 'ADD_POST';
 export const UPDATE_POST = 'UPDATE_POST';
 export const DELETE_POST = 'DELETE_POST';
 
+function sendData(data) {
+  const formData = new FormData();
+  Object.keys(data).forEach(key => formData.append(key, data[key]));
+  return formData;
+}
+
 function handleResponse(response) {
   if (response.ok) {
     return response.json();
@@ -53,19 +59,11 @@ export function editPost(data, id) {
   return dispatch => {
     return fetch(`/api/v1/posts/${id}`, {
       method: 'put',
-      body: JSON.stringify(data),
-      headers: {
-        "Content-Type": "application/json"
-      }
+      body: sendData(data),
+      headers: {}
     }).then(handleResponse)
       .then(data => dispatch(updatePost(data)));
   }
-}
-
-export function sendData(data) {
-  const formData = new FormData();
-  Object.keys(data).forEach(key => formData.append(key, data[key]));
-  return formData;
 }
 
 export function savePost(data, id) {
@@ -73,9 +71,7 @@ export function savePost(data, id) {
     return fetch(`/api/v1/categories/${id}/posts`, {
       method: 'post',
       body: sendData(data),
-      headers: {
-
-      }
+      headers: {}
     }).then(handleResponse)
       .then(data => dispatch(addPost(data)));
   }

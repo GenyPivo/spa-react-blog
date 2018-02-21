@@ -31,7 +31,7 @@ export default class PostForm extends Component {
     e.preventDefault();
 
     let errors = {};
-    if (this.state.name === '') errors.name = "Name can't be blank";
+    if (this.state.name === '') errors.name = "Post title can't be blank";
     if (this.state.content === '') errors.content = "Content can't be blank";
     this.setState({ errors });
     const isValid = Object.keys(errors).length === 0;

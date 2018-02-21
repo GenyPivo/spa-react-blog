@@ -4,6 +4,6 @@ class NotifyChannel < ApplicationCable::Channel
   end
 
   def unsubscribed
-    p 123
+
   end
 end
