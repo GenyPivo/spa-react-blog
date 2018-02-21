@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getComments } from '../actions/comments';
+import { getComments } from '../../actions/comments';
 import SingleComment from './SingleComment';
 import { List, Button } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 class Comments extends Component {
   resourceParams() {
@@ -21,7 +22,6 @@ class Comments extends Component {
 
     const commentsCollection = (
       <List>
-        {console.log(comments)}
         {comments.map(comment => <SingleComment comment={comment} key={comment.id}/>)}
       </List>
     );
@@ -48,8 +48,8 @@ class Comments extends Component {
 }
 
 Comments.propTypes = {
-  //comments: PropTypes.array.isRequired,
-  //getComments: PropTypes.func.isRequired
+  comments: PropTypes.array.isRequired,
+  getComments: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {

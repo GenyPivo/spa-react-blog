@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getPosts } from '../actions/posts';
+import { getPosts } from '../../actions/posts';
 import SinglePost from './SinglePost';
-import { List, Button, Dimmer, Loader } from 'semantic-ui-react';
+import { List, Button} from 'semantic-ui-react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 class Posts extends Component {
@@ -14,7 +15,6 @@ class Posts extends Component {
     const posts = this.props.posts;
     const postsCollection = (
       <List>
-        {console.log(posts)}
         {posts.map(post => <SinglePost cut={true} post={post} key={post.id}/>)}
       </List>
     );
@@ -41,8 +41,8 @@ class Posts extends Component {
 }
 
 Posts.propTypes = {
-  //posts: PropTypes.array.isRequired,
-  //getPosts: PropTypes.func.isRequired
+  posts: PropTypes.array.isRequired,
+  getPosts: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {

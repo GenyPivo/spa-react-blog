@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import { getCategories } from '../actions/categories';
+import { getCategories } from '../../actions/categories';
 import SingleCategory from './SingleCategory';
-import { List, Dimmer, Loader } from 'semantic-ui-react';
+import { List } from 'semantic-ui-react';
 
 class Categories extends Component {
 
@@ -16,7 +15,8 @@ class Categories extends Component {
 
     const categoriesCollection = (
       <List>
-        {categories.hasOwnProperty('list') && categories.list.map(category => <SingleCategory category={category} key={category.id}/>)}
+        {categories.hasOwnProperty('list') && categories.list.map(category => <SingleCategory category={category}
+                                                                                              key={category.id}/>)}
       </List>
     );
 
@@ -27,19 +27,11 @@ class Categories extends Component {
     return (
       <div>
         <h1>Categories List</h1>
-        <Dimmer active={!this.props.categories.fetched}>
-          <Loader />
-        </Dimmer>
-        {(categories.hasOwnProperty('list') && categories.list.length === 0) ? emptyCollectionMessage : categoriesCollection }
+        {(categories.hasOwnProperty('list') && categories.list.length === 0) ? emptyCollectionMessage : categoriesCollection}
       </div>
     );
   }
 }
-
-// Categories.propTypes = {
-//   categories: PropTypes.object.isRequired,
-//   getCategories: PropTypes.func.isRequired
-// };
 
 function mapStateToProps(state) {
   return {

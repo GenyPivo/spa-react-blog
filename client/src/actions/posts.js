@@ -84,6 +84,6 @@ export function destroyPost(id) {
         "Content-Type": "application/json"
       }
     }).then(handleResponse)
-      .then(data => dispatch(deletePost(id)));
+      .then(() => dispatch(deletePost(id)));
   }
 }

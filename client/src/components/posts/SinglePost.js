@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import {connect} from "react-redux";
-import { destroyPost } from "../actions/posts";
+import { destroyPost } from "../../actions/posts";
 
 class SinglePost extends Component{
 
@@ -40,11 +40,6 @@ class SinglePost extends Component{
         <Link to={`/posts/${this.props.post.id}`}>
           <Button color='orange'>
             {buttonText}
-          </Button>
-        </Link>
-        <Link to={`/posts/${this.props.post.id}#comments`}>
-          <Button color='green'>
-            Show comments
           </Button>
         </Link>
         <Link to={`/posts/${this.props.post.id}/edit`}>

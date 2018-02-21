@@ -11,7 +11,7 @@ export default function categories(state = [], action = {}) {
       ];
     case UPDATE_POST:
       return [
-        ...state.filter(v => (v.id.toString() !== action.post.id)),
+        ...state.filter(v => (v.id !== action.post.id)),
         action.post
       ];
     case DELETE_POST:

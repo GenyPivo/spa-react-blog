@@ -37,3 +37,30 @@ h1 {
 .ui .dimmer {
   background-color: rgba(0,0,0,0.95) !important;
 }
+
+.alternate {
+  cursor: pointer;
+  color: #000;
+}
+
+.alternate:hover {
+  background-color: rgba(0,0,0,0.4);
+}
+
+i.icon {
+  height: 32px !important;
+  width: 32px !important;
+  border-radius: 50%;
+}
+
+.react-confirm-alert-overlay {
+  top: -150px !important;
+}
+
+.react-confirm-alert-button-group {
+  justify-content: space-between !important;
+}
+
+.react-confirm-alert > h3 {
+  text-align: center !important;
+}

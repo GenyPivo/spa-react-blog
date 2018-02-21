@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { List, Button } from 'semantic-ui-react';
-import SingleComment from './SingleComment';
+import SingleComment from '../comments/SingleComment';
 import { Link } from 'react-router-dom';
 
 class FullPost extends Component {
@@ -16,20 +16,23 @@ class FullPost extends Component {
         .then(res => res.json())
         .then(data => this.setState({post: data}));
     } else {
-      this.setState({post: posts.find(x => x.id.toString() == this.props.match.params.id)});
+      this.setState({post: posts.find(x => x.id.toString() === this.props.match.params.id)});
     }
   }
 
   render() {
-    const post = this.state.post;
-
     const comments = (
       <div>
         <h3>Comments:</h3>
         <List>
-          {(post.hasOwnProperty('comments')) ? post.comments.map(comment => <SingleComment comment={comment} key={comment.id}/>) : ''}
+          {this.props.comments.map(comment => <SingleComment
+            comment={comment} key={comment.id}/>)}
         </List>
       </div>
+    );
+
+    const emptyCollectionMessage = (
+      <h3 className="no-data">There are no comments yet</h3>
     );
 
     return (
@@ -46,20 +49,16 @@ class FullPost extends Component {
         <div className="ui ignored info message">
           {this.state.post.content}
         </div>
-        {(post.hasOwnProperty('comments') && this.state.post.comments.length === 0) ? 'Hell' : comments }
+        {this.props.comments.length === 0 ? emptyCollectionMessage  : comments }
       </div>
     );
   }
 }
 
-// Categories.propTypes = {
-//   categories: PropTypes.object.isRequired,
-//   getCategories: PropTypes.func.isRequired
-// };
-
 function mapStateToProps(state) {
   return {
-    posts: state.posts
+    posts: state.posts,
+    comments: state.comments
   }
 }
 

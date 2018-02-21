@@ -1,30 +1,28 @@
 import React, { Component } from 'react';
 import { Route, Switch, withRouter } from 'react-router-dom'
 import Header from './components/Header'
-import AddCategory from "./components/AddCategory";
-import Categories from "./components/Categories";
+import AddCategory from "./components/categories/AddCategory";
+import Categories from "./components/categories/Categories";
 import {ActionCable} from 'react-actioncable-provider'
 import { connect } from 'react-redux';
-import { addCategory } from './actions/categories';
-import AddComment from './components/AddComment';
-import Comments from './components/Comments';
-import Posts from "./components/Posts";
-import AddPost from "./components/AddPost";
-import { addComment } from './actions/comments';
-import FullPost from "./components/FullPost";
-import EditPost from './components/EditPost';
+import { addCategory, updateCategory } from './actions/categories';
+import AddComment from './components/comments/AddComment';
+import Comments from './components/comments/Comments';
+import Posts from "./components/posts/Posts";
+import AddPost from "./components/posts/AddPost";
+import FullPost from "./components/posts/FullPost";
+import EditPost from './components/posts/EditPost';
+import EditCategory from './components/categories/EditCategory';
 
 class App extends Component {
 
   parseMessage = (message) => {
-    console.log(message);
-    console.log(this);
-    if (message.hasOwnProperty('category')) {
+    if (message.hasOwnProperty('category') && message.action === 'create') {
       this.props.addCategory(message.category);
     }
 
-    if (message.hasOwnProperty('comment')) {
-      this.props.addComment(message.comment);
+    if (message.hasOwnProperty('category') && message.action === 'update') {
+      this.props.updateCategory(message.category);
     }
   };
 
@@ -39,7 +37,8 @@ class App extends Component {
         <Header/>
         <Switch>
           <Route exact path="/" component={Categories} />
-          <Route path="/categories/add" component={AddCategory} />
+          <Route exact path="/categories/add" component={AddCategory} />
+          <Route exact path="/categories/:id/edit" component={EditCategory} />
           <Route exact path="/categories/:id/comments/" component={Comments} />
           <Route exact path="/categories/:id/comments/new" component={AddComment} />
           <Route exact path="/categories/:id/posts/" component={Posts} />
@@ -61,4 +60,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default withRouter(connect(mapStateToProps, { addCategory, addComment })(App));
+export default withRouter(connect(mapStateToProps, { addCategory, updateCategory })(App));
