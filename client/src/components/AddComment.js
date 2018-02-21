@@ -71,10 +71,15 @@ class AddComment extends Component {
       </Form>
     );
 
+    let path = `/${this.resource().type}/${this.resource().id}/`;
+    if (this.resource().type === 'categories') {
+      path += 'comments';
+    }
+
     return(
       <div>
         {!!this.state.server_error && <div className="ui negative message">{this.state.server_error}</div> }
-        { this.state.complete ? <Redirect to={`/${this.resource().type}/${this.resource().id}/comments`}/> : form }
+        { this.state.complete ? <Redirect to={path}/> : form }
       </div>
     )
   }

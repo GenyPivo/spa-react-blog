@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { getCategories } from '../actions/categories';
 import SingleCategory from './SingleCategory';
-import { List } from 'semantic-ui-react';
+import { List, Dimmer, Loader } from 'semantic-ui-react';
 
 class Categories extends Component {
 
@@ -27,6 +27,9 @@ class Categories extends Component {
     return (
       <div>
         <h1>Categories List</h1>
+        <Dimmer active={!this.props.categories.fetched}>
+          <Loader />
+        </Dimmer>
         {(categories.hasOwnProperty('list') && categories.list.length === 0) ? emptyCollectionMessage : categoriesCollection }
       </div>
     );

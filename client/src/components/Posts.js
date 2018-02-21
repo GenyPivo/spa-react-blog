@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getPosts } from '../actions/posts';
 import SinglePost from './SinglePost';
-import { List, Button } from 'semantic-ui-react';
+import { List, Button, Dimmer, Loader } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
 class Posts extends Component {
@@ -16,7 +16,7 @@ class Posts extends Component {
     const postsCollection = (
       <List>
         {console.log(posts)}
-        {posts.map(post => <SinglePost post={post} key={post.id}/>)}
+        {posts.map(post => <SinglePost cut={true} post={post} key={post.id}/>)}
       </List>
     );
 

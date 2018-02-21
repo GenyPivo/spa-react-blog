@@ -6,7 +6,7 @@ export default function SingleCategory(props) {
   return (
     <List.Item className="category-item">
       <Link to={`/categories/${props.category.id}/posts`} className="post-link">
-        <h2>{props.category.name}</h2>
+        <h2 className="centered">{props.category.name}</h2>
         <p>{props.category.description}</p>
       </Link>
       <Link to={`/categories/${props.category.id}/comments/new`}>
@@ -17,6 +17,11 @@ export default function SingleCategory(props) {
       <Link to={`/categories/${props.category.id}/comments`}>
         <Button color='red'>
           Show comments
+        </Button>
+      </Link>
+      <Link to={`/categories/${props.category.id}/posts`}>
+        <Button color='grey'>
+          Go to posts >>
         </Button>
       </Link>
     </List.Item>

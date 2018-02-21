@@ -11,6 +11,7 @@ import Comments from './components/Comments';
 import Posts from "./components/Posts";
 import AddPost from "./components/AddPost";
 import { addComment } from './actions/comments'
+import FullPost from "./components/FullPost";
 
 class App extends Component {
 
@@ -44,6 +45,7 @@ class App extends Component {
           <Route exact path="/categories/:id/posts/new" component={AddPost} />
           <Route exact path="/posts/:id/comments" component={Comments} />
           <Route exact path="/posts/:id/comments/new" component={AddComment} />
+          <Route exact path="/posts/:id" component={FullPost} />
         </Switch>
       </div>
     );
