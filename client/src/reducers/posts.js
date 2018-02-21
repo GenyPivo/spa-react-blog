@@ -1,4 +1,4 @@
-import {SET_POSTS, ADD_POST} from "../actions/posts";
+import {SET_POSTS, ADD_POST, UPDATE_POST, DELETE_POST} from "../actions/posts";
 
 export default function categories(state = [], action = {}) {
   switch (action.type) {
@@ -9,6 +9,14 @@ export default function categories(state = [], action = {}) {
         ...state,
         action.post,
       ];
+    case UPDATE_POST:
+      return [
+        ...state.filter(v => (v.id.toString() !== action.post.id)),
+        action.post
+      ];
+    case DELETE_POST:
+      return state.filter(v => v.id !== action.postId);
+
     default: return state;
   }
 }

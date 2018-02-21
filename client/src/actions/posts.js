@@ -1,5 +1,7 @@
 export const SET_POSTS = 'SET_POSTS';
 export const ADD_POST = 'ADD_POST';
+export const UPDATE_POST = 'UPDATE_POST';
+export const DELETE_POST = 'DELETE_POST';
 
 function handleResponse(response) {
   if (response.ok) {
@@ -25,11 +27,38 @@ export function setPosts(posts) {
   }
 }
 
+export function updatePost(post) {
+  return {
+    type: UPDATE_POST,
+    post
+  }
+}
+
+export function deletePost(id) {
+  return {
+    type: DELETE_POST,
+    postId: id
+  }
+}
+
 export function getPosts(id) {
   return dispatch => {
     fetch(`/api/v1/categories/${id}/posts`)
       .then(res => res.json())
       .then(data => dispatch(setPosts(data)));
+  }
+}
+
+export function editPost(data, id) {
+  return dispatch => {
+    return fetch(`/api/v1/posts/${id}`, {
+      method: 'put',
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }).then(handleResponse)
+      .then(data => dispatch(updatePost(data)));
   }
 }
 
@@ -43,5 +72,18 @@ export function savePost(data, id) {
       }
     }).then(handleResponse)
       .then(data => dispatch(addPost(data)));
+  }
+}
+
+export function destroyPost(id) {
+  return dispatch => {
+    return fetch(`/api/v1/posts/${id}`, {
+      method: 'delete',
+      body: '',
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }).then(handleResponse)
+      .then(data => dispatch(deletePost(id)));
   }
 }

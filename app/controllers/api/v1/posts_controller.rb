@@ -1,6 +1,6 @@
 class Api::V1::PostsController < ApplicationController
   before_action :set_category, only: [:index, :create]
-  before_action :set_post, only: [:show]
+  before_action :set_post, only: [:show, :update, :destroy]
 
   def index
     render json: @category.posts
@@ -17,6 +17,22 @@ class Api::V1::PostsController < ApplicationController
 
   def show
     render json: @post
+  end
+
+  def update
+    if @post.update(permitted_params)
+      render json: @post
+    else
+      render json: { error: 'Some error' }, status: 400
+    end
+  end
+
+  def destroy
+    if @post.destroy
+      render json: @post
+    else
+      render json: { error: 'Some error' }, status: 400
+    end
   end
 
   private

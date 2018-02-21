@@ -12,7 +12,6 @@ class Posts extends Component {
 
   render() {
     const posts = this.props.posts;
-
     const postsCollection = (
       <List>
         {console.log(posts)}
