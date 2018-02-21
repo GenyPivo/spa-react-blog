@@ -11,7 +11,9 @@ export default class PostForm extends Component {
     errors: {},
     server_error: '',
     loading: false,
-    completed: false
+    completed: false,
+    fileName: '',
+    file: null
   };
 
   handleChange = (e) => {
@@ -36,13 +38,26 @@ export default class PostForm extends Component {
 
     if (isValid) {
       this.setState({ loading: true });
-      const { name, content } = this.state;
+      const { name, content, file } = this.state;
       const resourceId = this.props.match.params.id;
+      let params = {};
 
-      this.sendRequestFunction()({ name: name, content: content }, resourceId)
+      if (file) {
+        params = { name: name, content: content, file: file }
+      } else {
+        params = { name: name, content: content }
+      }
+
+      this.sendRequestFunction()(params, resourceId)
         .then(() => { this.setState( {complete: true} )},
           (err) => err.response.json().then(({error}) => this.setState({ server_error: error, loading: false })));
     }
+  };
+
+  handleFileInput = (e) => {
+    const files = e.target.files;
+    const fileName = files[0].name;
+    this.setState({fileName: fileName, file: files[0]});
   };
 
   render() {
@@ -61,6 +76,15 @@ export default class PostForm extends Component {
                     value={this.state.content}
                     onChange={this.handleChange} />
           <span>{this.state.errors.content}</span>
+        </Form.Field>
+        <Form.Field>
+          <label htmlFor="embedpollfileinput" className="ui huge red button upload-file-label">
+            <i className="ui upload icon"/>
+            Upload file
+          </label>
+          <input type="file" name="file" className="inputfile" id="embedpollfileinput" onChange={this.handleFileInput} />
+          {console.log(this.state.fileName)}
+          {this.state.fileName !== '' && this.state.fileName}
         </Form.Field>
         <Button type='submit' primary>Submit</Button>
         <Button onClick={this.props.history.goBack}>Go Back</Button>

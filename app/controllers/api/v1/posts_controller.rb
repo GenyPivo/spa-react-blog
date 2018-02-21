@@ -46,6 +46,6 @@ class Api::V1::PostsController < ApplicationController
   end
 
   def permitted_params
-    params.permit(:name, :content)
+    params.permit(:name, :content, :file)
   end
 end

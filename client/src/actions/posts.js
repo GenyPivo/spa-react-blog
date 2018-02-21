@@ -62,13 +62,19 @@ export function editPost(data, id) {
   }
 }
 
+export function sendData(data) {
+  const formData = new FormData();
+  Object.keys(data).forEach(key => formData.append(key, data[key]));
+  return formData;
+}
+
 export function savePost(data, id) {
   return dispatch => {
     return fetch(`/api/v1/categories/${id}/posts`, {
       method: 'post',
-      body: JSON.stringify(data),
+      body: sendData(data),
       headers: {
-        "Content-Type": "application/json"
+
       }
     }).then(handleResponse)
       .then(data => dispatch(addPost(data)));

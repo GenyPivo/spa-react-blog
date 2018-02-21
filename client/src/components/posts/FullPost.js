@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { List, Button } from 'semantic-ui-react';
+import { List, Button, Image } from 'semantic-ui-react';
 import SingleComment from '../comments/SingleComment';
 import { Link } from 'react-router-dom';
 
@@ -35,6 +35,27 @@ class FullPost extends Component {
       <h3 className="no-data">There are no comments yet</h3>
     );
 
+    const postImage = (
+      <Image src={this.state.post.attachment_url} fluid/>
+    );
+
+    const attachUrl = this.state.post.attachment_url;
+    const contentType = this.state.post.content_type;
+
+    const postAttachment = (
+      <a href={`http://localhost:3001${attachUrl}`}>
+        <Button color='red'>
+          Attachment: {attachUrl && attachUrl.replace(/^.*[\\\/]/, '').split('?')[0]}
+        </Button>
+      </a>
+    );
+
+    const attachment = () => {
+      if (contentType) {
+        return contentType.includes('image') ? postImage : postAttachment
+      }
+    };
+
     return (
       <div>
         <h1>{this.state.post.name}</h1>
@@ -49,6 +70,7 @@ class FullPost extends Component {
         <div className="ui ignored info message">
           {this.state.post.content}
         </div>
+        {attachment()}
         {this.props.comments.length === 0 ? emptyCollectionMessage  : comments }
       </div>
     );

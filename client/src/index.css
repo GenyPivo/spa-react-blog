@@ -64,3 +64,19 @@ i.icon {
 .react-confirm-alert > h3 {
   text-align: center !important;
 }
+
+.inputfile {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+.upload-file-label {
+  color: #FFF !important;
+  font-size: 18px !important;
+  width: 185px;
+  height: 46px;
+}
