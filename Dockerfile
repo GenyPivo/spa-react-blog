@@ -79,9 +79,13 @@ ADD Gemfile.lock $APP_HOME/Gemfile.lock
 ENV RAILS_ENV=development
 
 RUN bundle install
+
+RUN npx create-react-app client1
+
+RUN cp -avr /app/client1 /app/client
+
 ADD . $APP_HOME
 
 RUN npm --prefix client install
 
-RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
+RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /app/client1
